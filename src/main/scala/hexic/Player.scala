@@ -5,15 +5,17 @@ package hexic
  */
 abstract class Player(game: Game) {
 
+  val board = game.boardView
+
   def nextMove: Move
 
   def allowedMoves(i: Int, j: Int) = {
     val (w, h) = game.dimensions
     if (i > h - 3)
       Nil
-    else if (j < 1)
+    else if (i % 2 != 0 && j < 1)
       RightClockwise(i, j) :: RightCounterClockwise(i, j) :: Nil
-    else if (j > w - 2)
+    else if (i % 2 == 0 && j > w - 2)
       LeftClockwise(i, j) :: LeftCounterClockwise(i, j) :: Nil
     else
       LeftClockwise(i, j) :: LeftCounterClockwise(i, j) :: RightClockwise(i, j) :: RightCounterClockwise(i, j) :: Nil
@@ -42,7 +44,7 @@ class Robot(game: Game) extends Player(game) {
   }
 
   def scoreMove(move: Move): (Int, Move) = {
-    val board = game.boardView //make a copy of board
+    game.synchronize(board) //had to do so because copying of board crashes java
     move match {
       case LeftClockwise(i, j) =>
         board.rotateLeftClockwise(i, j)

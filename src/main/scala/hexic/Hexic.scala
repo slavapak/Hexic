@@ -7,7 +7,6 @@ object Hexic {
     val h = 15
     val colNum = 5 // purple, blue, orange, green, red (according to http://zone.msn.com/en/hexic/default.htm)
     val board = Board.generate(w, h, colNum)
-    printBoard(board)
     new Game(board).run()
   }
 

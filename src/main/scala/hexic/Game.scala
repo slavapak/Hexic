@@ -13,6 +13,12 @@ class Game(private[this] val board: Board) {
   def run() {
     var nextMove = player.nextMove
     while (nextMove != null) {
+      println("Before move")
+      Hexic.printBoard(board)
+      println("Move " + nextMove)
+      make(nextMove)
+      println("After move")
+      Hexic.printBoard(board)
       var clusters = board.enumerateClusters
       while (!clusters.isEmpty) {
         score = score + scoreClusters(clusters)
@@ -20,9 +26,8 @@ class Game(private[this] val board: Board) {
         clusters = board.enumerateClusters
       }
       nextMove = player.nextMove
-      make(nextMove)
-      Hexic.printBoard(board)
-      println(score)
+      println("Score " + score)
+      println()
     }
   }
 
@@ -59,6 +64,12 @@ class Game(private[this] val board: Board) {
 
   def dimensions =
     (board.w, board.h)
+
+  def synchronize(b: Board) {
+    for (i <- 0 until b.h;
+         j <- 0 until b.w)
+      b.set(i, j, board(i, j))
+  }
 
 }
 
