@@ -10,20 +10,21 @@ object Hexic {
     new Game(board).run()
   }
 
-  def printBoard(board: Board) {
+  def printBoard(title: String, board: Board) {
+    println(title + ":")
     for (j <- 0 until board.w)
       print("   _")
     println()
     print(" ")
     for (j <- 0 until board.w)
-      print("_/" + board(0, j) + "\\")
+      print("_/" + colourString(board(0, j)) + "\\")
     println()
     for (i <- 1 until board.h) {
       if (i % 2 == 0)
         print("\\_")
       for (j <- 0 until board.w - 1)
-        print("/" + board(i, j) + "\\_")
-      print("/" + board(i, board.w - 1) + "\\")
+        print("/" + colourString(board(i, j)) + "\\_")
+      print("/" + colourString(board(i, board.w - 1)) + "\\")
       if (i % 2 != 0)
         print("_/")
       println()
@@ -33,6 +34,13 @@ object Hexic {
     for (j <- 0 until board.w)
       print("\\_/ ")
     println()
+    println()
   }
+
+  def colourString(colour: Int) =
+  if (colour > 0)
+    colour.toString
+  else
+    " "
 
 }

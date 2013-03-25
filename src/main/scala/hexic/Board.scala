@@ -146,8 +146,11 @@ class Board(val w: Int, val h: Int, colNum: Int) {
 
   def swipe(clusters: mutable.Set[Cluster]) {
     clusters.flatMap(_.points).foreach{case (i, j) => board(i)(j) = Black}
+    Hexic.printBoard("Before remove empty cells", this)
     dropCellsDown()
+    Hexic.printBoard("After remove empty cells", this)
     fillEmptyCells()
+    Hexic.printBoard("After drop empty cells down", this)
   }
 
   def dropCellsDown() {

@@ -12,13 +12,11 @@ class Game(private[this] val board: Board) {
 
   def run() {
     var nextMove = player.nextMove
+    Hexic.printBoard("Start", board)
     while (nextMove != null) {
-      println("Before move")
-      Hexic.printBoard(board)
       println("Move " + nextMove)
       make(nextMove)
-      println("After move")
-      Hexic.printBoard(board)
+      Hexic.printBoard("After move", board)
       var clusters = board.enumerateClusters
       while (!clusters.isEmpty) {
         score = score + scoreClusters(clusters)
